@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_training/component/action_buttons.dart';
 import 'package:flutter_training/component/temperature.dart';
+import 'package:flutter_training/component/weather_icon.dart';
 import 'package:flutter_training/domain/weather_service.dart';
 import 'package:flutter_training/model/weather_model.dart';
 
@@ -41,9 +42,18 @@ class _MainAppState extends State<MainApp> {
             child: Column(
               children: [
                 const Spacer(),
-                const AspectRatio(
-                  aspectRatio: 1,
-                  child: Placeholder(),
+                Flexible(
+                  child: Column(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 1,
+                        child: weatherCondition != null
+                            ? WeatherIcon(weatherType: weatherCondition!)
+                            : const Placeholder(),
+                      ),
+                      const Temperature(),
+                    ],
+                  ),
                 ),
                 const Temperature(),
                 Flexible(
