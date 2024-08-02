@@ -19,15 +19,15 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   final WeatherService weatherService = WeatherService();
-  WeatherType? weatherCondition;
+  WeatherType? weatherType;
 
   void _reloadWeather() {
     setState(() {
       try {
-        weatherCondition = weatherService.fetch();
-        debugPrint(weatherCondition.toString());
+        weatherType = weatherService.fetch();
+        debugPrint(weatherType.toString());
       } on Exception {
-        weatherCondition = null;
+        weatherType = null;
       }
     });
   }
@@ -47,8 +47,8 @@ class _MainAppState extends State<MainApp> {
                     children: [
                       AspectRatio(
                         aspectRatio: 1,
-                        child: weatherCondition != null
-                            ? WeatherIcon(weatherType: weatherCondition!)
+                        child: weatherType != null
+                            ? WeatherIcon(weatherType: weatherType!)
                             : const Placeholder(),
                       ),
                       const Temperature(),
@@ -81,7 +81,6 @@ class _MainAppState extends State<MainApp> {
     properties.add(
       DiagnosticsProperty<WeatherService>('weatherService', weatherService),
     );
-    properties
-        .add(EnumProperty<WeatherType?>('weatherCondition', weatherCondition));
+    properties.add(EnumProperty<WeatherType?>('weatherType', weatherType));
   }
 }
