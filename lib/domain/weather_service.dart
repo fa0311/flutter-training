@@ -3,7 +3,7 @@ import 'package:flutter_training/util/enum.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherService {
-  WeatherService(YumemiWeather? client) : _client = client ?? YumemiWeather();
+  WeatherService({YumemiWeather? client}) : _client = client ?? YumemiWeather();
 
   final YumemiWeather _client;
 
