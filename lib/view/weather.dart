@@ -6,14 +6,14 @@ import 'package:flutter_training/component/weather_icon.dart';
 import 'package:flutter_training/domain/weather_service.dart';
 import 'package:flutter_training/model/weather_model.dart';
 
-class WeatherApp extends StatefulWidget {
-  const WeatherApp({super.key});
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({super.key});
 
   @override
-  State<WeatherApp> createState() => _WeatherAppState();
+  State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _WeatherAppState extends State<WeatherApp> {
+class _WeatherScreenState extends State<WeatherScreen> {
   final WeatherService weatherService = WeatherService();
   WeatherType? weatherType;
 
