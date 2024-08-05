@@ -14,8 +14,8 @@ class Temperature extends StatelessWidget {
             '** ℃',
             style: Theme.of(context)
                 .textTheme
-                .labelLarge
-                ?.copyWith(color: Colors.red),
+                .labelLarge!
+                .copyWith(color: Colors.red),
           ),
         ),
         Padding(
@@ -24,8 +24,8 @@ class Temperature extends StatelessWidget {
             '** ℃',
             style: Theme.of(context)
                 .textTheme
-                .labelLarge
-                ?.copyWith(color: Colors.blue),
+                .labelLarge!
+                .copyWith(color: Colors.blue),
           ),
         ),
       ],
