@@ -32,7 +32,7 @@ class MainApp extends StatelessWidget {
                 ),
                 Flexible(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 40),
+                    padding: EdgeInsets.only(top: 80),
                     child: ActionButton(),
                   ),
                 ),
