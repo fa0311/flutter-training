@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_training/component/action_button.dart';
+import 'package:flutter_training/component/action_buttons.dart';
 import 'package:flutter_training/component/temperature.dart';
 
 void main() {
@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.only(top: 80),
-                    child: ActionButton(),
+                    child: ActionButtons(),
                   ),
                 ),
               ],
