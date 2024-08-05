@@ -19,17 +19,11 @@ class MainApp extends StatelessWidget {
             child: Column(
               children: [
                 Spacer(),
-                Flexible(
-                  child: Column(
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 1,
-                        child: Placeholder(),
-                      ),
-                      Temperature(),
-                    ],
-                  ),
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: Placeholder(),
                 ),
+                Temperature(),
                 Flexible(
                   child: Padding(
                     padding: EdgeInsets.only(top: 80),
