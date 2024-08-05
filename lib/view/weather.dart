@@ -37,19 +37,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
           child: Column(
             children: [
               const Spacer(),
-              Flexible(
-                child: Column(
-                  children: [
-                    AspectRatio(
-                      aspectRatio: 1,
-                      child: weatherType != null
-                          ? WeatherIcon(weatherType: weatherType!)
-                          : const Placeholder(),
-                    ),
-                    const Temperature(),
-                  ],
-                ),
+              AspectRatio(
+                aspectRatio: 1,
+                child: weatherType != null
+                    ? WeatherIcon(weatherType: weatherType!)
+                    : const Placeholder(),
               ),
+              const Temperature(),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 40),
