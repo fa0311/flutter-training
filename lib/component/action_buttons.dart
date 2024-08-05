@@ -1,7 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ActionButtons extends StatelessWidget {
-  const ActionButtons({super.key});
+  const ActionButtons({
+    required this.reloadPressed,
+    required this.closePressed,
+    super.key,
+  });
+  final VoidCallback? reloadPressed;
+  final VoidCallback? closePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -9,14 +16,25 @@ class ActionButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         TextButton(
+          onPressed: closePressed,
           child: const Text('Close'),
-          onPressed: () {},
         ),
         TextButton(
+          onPressed: reloadPressed,
           child: const Text('Reload'),
-          onPressed: () {},
         ),
       ],
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+      ObjectFlagProperty<VoidCallback?>.has('reloadPressed', reloadPressed),
+    );
+    properties.add(
+      ObjectFlagProperty<VoidCallback?>.has('closePressed', closePressed),
     );
   }
 }
