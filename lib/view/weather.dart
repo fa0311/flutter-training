@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_training/component/action_buttons.dart';
@@ -18,14 +20,29 @@ class _WeatherScreenState extends State<WeatherScreen> {
   WeatherType? weatherType;
 
   void _reloadWeather() {
-    setState(() {
-      try {
-        weatherType = weatherService.fetch();
-        debugPrint(weatherType.toString());
-      } on Exception {
-        weatherType = null;
-      }
-    });
+    try {
+      setState(() {
+        weatherType = weatherService.fetch('tokyo');
+      });
+      debugPrint(weatherType.toString());
+    } on Exception {
+      unawaited(
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('仮のテキスト'),
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    }
   }
 
   void _closeScreen() {
