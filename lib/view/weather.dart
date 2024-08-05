@@ -28,6 +28,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
     });
   }
 
+  void _closeScreen() {
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,9 +52,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: ActionButtons(
-                    closePressed: () {
-                      throw UnimplementedError();
-                    },
+                    closePressed: _closeScreen,
                     reloadPressed: _reloadWeather,
                   ),
                 ),
