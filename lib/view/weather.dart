@@ -46,7 +46,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
               const Temperature(),
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 40),
+                  padding: const EdgeInsets.only(top: 80),
                   child: ActionButtons(
                     closePressed: () {
                       throw UnimplementedError();
