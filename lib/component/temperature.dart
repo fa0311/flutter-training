@@ -19,21 +19,21 @@ class Temperature extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
-            '$maxTemperature ℃',
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.red),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(
             '$minTemperature ℃',
             style: Theme.of(context)
                 .textTheme
                 .labelLarge!
                 .copyWith(color: Colors.blue),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Text(
+            '$maxTemperature ℃',
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(color: Colors.red),
           ),
         ),
       ],
