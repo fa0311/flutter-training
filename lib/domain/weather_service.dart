@@ -15,9 +15,9 @@ class WeatherService {
     } on YumemiWeatherError catch (e) {
       switch (e) {
         case YumemiWeatherError.invalidParameter:
-          throw WeatherInvalidParameterExeption();
+          throw WeatherInvalidParameterException();
         case YumemiWeatherError.unknown:
-          throw WeatherUnknownExeption();
+          throw WeatherUnknownException();
       }
     }
   }
@@ -25,7 +25,7 @@ class WeatherService {
   WeatherType _deserialize(String raw) {
     final response = WeatherType.values.byNameOrNull(raw);
     if (response == null) {
-      throw WeatherInvalidResponseExeption();
+      throw WeatherInvalidResponseException();
     }
     return response;
   }
