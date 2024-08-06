@@ -7,7 +7,7 @@ class WeatherIcon extends StatelessWidget {
   const WeatherIcon({required this.weatherType, super.key});
   final WeatherType weatherType;
 
-  SvgGenImage getPath() {
+  SvgGenImage getSvg() {
     switch (weatherType) {
       case WeatherType.sunny:
         return Assets.weather.sunny;
@@ -20,8 +20,7 @@ class WeatherIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final path = getPath();
-    return path.svg();
+    return getSvg().svg();
   }
 
   @override
