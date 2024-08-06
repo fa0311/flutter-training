@@ -39,13 +39,11 @@ class WeatherService {
   }
 
   WeatherResponseRecord _deserialize(String raw) {
-    final json = jsonDecode(raw);
-
-    if (json is! Map<String, dynamic>) {
-      throw WeatherInvalidResponseException();
-    }
-
     try {
+      final json = jsonDecode(raw);
+      if (json is! Map<String, dynamic>) {
+        throw WeatherInvalidResponseException();
+      }
       final weatherType = json['weather_condition'].toString();
       return (
         weatherCondition: WeatherType.values.bySafeName(weatherType),
