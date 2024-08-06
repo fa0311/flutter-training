@@ -2,15 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
-import 'package:flutter_training/util/enum.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
-
-typedef WeatherResponseRecord = ({
-  WeatherType weatherCondition,
-  int maxTemperature,
-  int minTemperature,
-  DateTime date
-});
 
 class WeatherService {
   WeatherService({YumemiWeather? client}) : _client = client ?? YumemiWeather();
@@ -18,10 +10,11 @@ class WeatherService {
   final YumemiWeather _client;
 
   String _serialize({required String area, required DateTime date}) {
-    return jsonEncode({
-      'area': area,
-      'date': date.toIso8601String(),
-    });
+    try {
+      return jsonEncode(WeatherParameterModel(area: area, date: date).toJson());
+    } on Exception {
+      throw WeatherInvalidParameterException();
+    }
   }
 
   String _request(String jsonString) {
@@ -38,26 +31,17 @@ class WeatherService {
     }
   }
 
-  WeatherResponseRecord _deserialize(String raw) {
+  WeatherResponseModel _deserialize(String raw) {
     try {
-      final json = jsonDecode(raw);
-      if (json is! Map<String, dynamic>) {
-        throw const FormatException();
-      }
-      final weatherType = json['weather_condition'].toString();
-      return (
-        weatherCondition: WeatherType.values.bySafeName(weatherType),
-        maxTemperature: int.parse(json['max_temperature'].toString()),
-        minTemperature: int.parse(json['min_temperature'].toString()),
-        date: DateTime.parse(json['date'].toString()),
-      );
-    } on FormatException {
+      final json = (jsonDecode(raw) as Map).cast<String, dynamic>();
+      return WeatherResponseModel.fromJson(json);
+    } on Exception {
       throw WeatherInvalidResponseException();
     }
   }
 
-  WeatherResponseRecord fetch({required String area, required DateTime date}) {
-    final jsonString = _serialize(area: area, date: date);
+  WeatherResponseModel fetch({DateTime? date, String area = 'tokyo'}) {
+    final jsonString = _serialize(area: area, date: date ?? DateTime.now());
     final raw = _request(jsonString);
     return _deserialize(raw);
   }

@@ -23,17 +23,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   void _reloadWeather() {
     try {
-      final response = weatherService.fetch(
-        area: 'tokyo',
-        date: DateTime.now(),
-      );
+      final response = weatherService.fetch();
       setState(() {
         weatherType = response.weatherCondition;
         maxTemperature = response.maxTemperature;
         minTemperature = response.minTemperature;
       });
       debugPrint(weatherType.toString());
-    } on Exception {
+    } on Exception catch (_) {
       unawaited(
         showDialog(
           context: context,
