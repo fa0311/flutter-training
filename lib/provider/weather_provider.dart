@@ -14,7 +14,7 @@ WeatherResponseModel fetchWeather(
   FetchWeatherRef ref,
   WeatherParameterModel param,
 ) {
-  final service = ref.read(weatherServiceProvider);
+  final service = ref.watch(weatherServiceProvider);
   return service.fetch(param);
 }
 
@@ -25,7 +25,7 @@ class WeatherResponseState extends _$WeatherResponseState {
     return null;
   }
 
-  void change(WeatherParameterModel param) {
-    state = ref.read(fetchWeatherProvider(param));
+  void change(WeatherResponseModel newState) {
+    state = newState;
   }
 }

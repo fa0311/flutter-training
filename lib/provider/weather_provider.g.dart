@@ -21,7 +21,7 @@ final weatherServiceProvider = Provider<WeatherService>.internal(
 );
 
 typedef WeatherServiceRef = ProviderRef<WeatherService>;
-String _$fetchWeatherHash() => r'547ea1d4bdfc3c1b55b9e60f43a3f1a0536234d3';
+String _$fetchWeatherHash() => r'357281ae2bc05a3764da092e24ccafc26cc0a975';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -171,7 +171,7 @@ class _FetchWeatherProviderElement extends ProviderElement<WeatherResponseModel>
 }
 
 String _$weatherResponseStateHash() =>
-    r'2ccb0bbaa557a18342a235f0e68519c4f847d50c';
+    r'098f05720918563360de3bb22e81df762d4d7309';
 
 /// See also [WeatherResponseState].
 @ProviderFor(WeatherResponseState)
