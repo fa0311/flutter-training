@@ -18,11 +18,19 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   final WeatherService weatherService = WeatherService();
   WeatherType? weatherType;
+  int? maxTemperature;
+  int? minTemperature;
 
   void _reloadWeather() {
     try {
+      final response = weatherService.fetch(
+        area: 'tokyo',
+        date: DateTime.now(),
+      );
       setState(() {
-        weatherType = weatherService.fetch('tokyo');
+        weatherType = response.weatherCondition;
+        maxTemperature = response.maxTemperature;
+        minTemperature = response.minTemperature;
       });
       debugPrint(weatherType.toString());
     } on Exception {
@@ -64,7 +72,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     ? WeatherIcon(weatherType: weatherType!)
                     : const Placeholder(),
               ),
-              const Temperature(),
+              Temperature(
+                minTemperature:
+                    minTemperature != null ? minTemperature.toString() : '**',
+                maxTemperature:
+                    maxTemperature != null ? maxTemperature.toString() : '**',
+              ),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80),
@@ -88,5 +101,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
       DiagnosticsProperty<WeatherService>('weatherService', weatherService),
     );
     properties.add(EnumProperty<WeatherType?>('weatherType', weatherType));
+    properties.add(IntProperty('maxTemperature', maxTemperature));
+    properties.add(IntProperty('minTemperature', minTemperature));
   }
 }
