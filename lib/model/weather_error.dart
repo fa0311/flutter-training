@@ -1,7 +1,7 @@
-class WeatherExeption implements Exception {}
+class WeatherException implements Exception {}
 
-class WeatherInvalidParameterExeption implements WeatherExeption {}
+class WeatherInvalidParameterException implements WeatherException {}
 
-class WeatherUnknownExeption implements WeatherExeption {}
+class WeatherUnknownException implements WeatherException {}
 
-class WeatherInvalidResponseExeption implements WeatherExeption {}
+class WeatherInvalidResponseException implements WeatherException {}

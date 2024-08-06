@@ -31,9 +31,9 @@ class WeatherService {
     } on YumemiWeatherError catch (e) {
       switch (e) {
         case YumemiWeatherError.invalidParameter:
-          throw WeatherInvalidParameterExeption();
+          throw WeatherInvalidParameterException();
         case YumemiWeatherError.unknown:
-          throw WeatherUnknownExeption();
+          throw WeatherUnknownException();
       }
     }
   }
