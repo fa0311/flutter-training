@@ -8,8 +8,8 @@ class Temperature extends StatelessWidget {
     super.key,
   });
 
-  final String minTemperature;
-  final String maxTemperature;
+  final int? minTemperature;
+  final int? maxTemperature;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class Temperature extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
-            '$minTemperature ℃',
+            '${minTemperature ?? "**"} ℃',
             style: Theme.of(context)
                 .textTheme
                 .labelLarge!
@@ -29,7 +29,7 @@ class Temperature extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
-            '$maxTemperature ℃',
+            '${maxTemperature ?? "**"} ℃',
             style: Theme.of(context)
                 .textTheme
                 .labelLarge!
@@ -43,7 +43,7 @@ class Temperature extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(StringProperty('minTemperature', minTemperature));
-    properties.add(StringProperty('maxTemperature', maxTemperature));
+    properties.add(IntProperty('minTemperature', minTemperature));
+    properties.add(IntProperty('maxTemperature', maxTemperature));
   }
 }

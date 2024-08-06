@@ -73,10 +73,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     : const Placeholder(),
               ),
               Temperature(
-                minTemperature:
-                    minTemperature != null ? minTemperature.toString() : '**',
-                maxTemperature:
-                    maxTemperature != null ? maxTemperature.toString() : '**',
+                minTemperature: minTemperature,
+                maxTemperature: maxTemperature,
               ),
               Flexible(
                 child: Padding(
