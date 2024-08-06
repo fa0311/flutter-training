@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_training/util/end_of_frame_mixin.dart';
 import 'package:flutter_training/view/weather.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,10 +11,11 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with EndOfFrameMixin {
   _SplashScreenState();
 
-  Future<void> _navigation() async {
+  @override
+  Future<void> endOfFrame() async {
     while (true) {
       await Future<void>.delayed(const Duration(milliseconds: 500));
       if (!mounted) {
@@ -26,14 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
       );
       await Navigator.of(context).push(page);
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    unawaited(
-      WidgetsBinding.instance.endOfFrame.then((_) => _navigation()),
-    );
   }
 
   @override
