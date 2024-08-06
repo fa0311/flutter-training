@@ -39,14 +39,23 @@ class WeatherService {
   }
 
   WeatherResponseRecord _deserialize(String raw) {
-    final json = (jsonDecode(raw) as Map).cast<String, dynamic>();
-    final weatherType = json['weather_condition'] as String;
-    return (
-      weatherCondition: WeatherType.values.bySafeName(weatherType),
-      maxTemperature: json['max_temperature'] as int,
-      minTemperature: json['min_temperature'] as int,
-      date: DateTime.parse(json['date'] as String),
-    );
+    final json = jsonDecode(raw);
+
+    if (json is! Map<String, dynamic>) {
+      throw WeatherInvalidResponseException();
+    }
+
+    try {
+      final weatherType = json['weather_condition'].toString();
+      return (
+        weatherCondition: WeatherType.values.bySafeName(weatherType),
+        maxTemperature: int.parse(json['max_temperature'].toString()),
+        minTemperature: int.parse(json['min_temperature'].toString()),
+        date: DateTime.parse(json['date'].toString()),
+      );
+    } on Exception {
+      throw WeatherInvalidResponseException();
+    }
   }
 
   WeatherResponseRecord fetch({required String area, required DateTime date}) {
