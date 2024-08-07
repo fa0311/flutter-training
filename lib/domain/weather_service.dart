@@ -51,7 +51,7 @@ class WeatherService {
         minTemperature: int.parse(json['min_temperature'].toString()),
         date: DateTime.parse(json['date'].toString()),
       );
-    } on Exception {
+    } on FormatException {
       throw WeatherInvalidResponseException();
     }
   }
