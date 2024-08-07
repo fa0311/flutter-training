@@ -1,16 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 import 'package:flutter_training/util/enum.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
+
+typedef WeatherResponseRecord = ({
+  WeatherType weatherCondition,
+  int maxTemperature,
+  int minTemperature,
+  DateTime date
+});
 
 class WeatherService {
   WeatherService({YumemiWeather? client}) : _client = client ?? YumemiWeather();
 
   final YumemiWeather _client;
 
-  String _request(String area) {
+  String _serialize({required String area, required DateTime date}) {
+    return jsonEncode({
+      'area': area,
+      'date': date.toIso8601String(),
+    });
+  }
+
+  String _request(String jsonString) {
     try {
-      final response = _client.fetchThrowsWeather(area);
+      final response = _client.fetchWeather(jsonString);
       return response;
     } on YumemiWeatherError catch (e) {
       switch (e) {
@@ -22,16 +38,27 @@ class WeatherService {
     }
   }
 
-  WeatherType _deserialize(String raw) {
-    final response = WeatherType.values.byNameOrNull(raw);
-    if (response == null) {
+  WeatherResponseRecord _deserialize(String raw) {
+    try {
+      final json = jsonDecode(raw);
+      if (json is! Map<String, dynamic>) {
+        throw const FormatException();
+      }
+      final weatherType = json['weather_condition'].toString();
+      return (
+        weatherCondition: WeatherType.values.bySafeName(weatherType),
+        maxTemperature: int.parse(json['max_temperature'].toString()),
+        minTemperature: int.parse(json['min_temperature'].toString()),
+        date: DateTime.parse(json['date'].toString()),
+      );
+    } on FormatException {
       throw WeatherInvalidResponseException();
     }
-    return response;
   }
 
-  WeatherType fetch(String area) {
-    final raw = _request(area);
+  WeatherResponseRecord fetch({required String area, required DateTime date}) {
+    final jsonString = _serialize(area: area, date: date);
+    final raw = _request(jsonString);
     return _deserialize(raw);
   }
 }

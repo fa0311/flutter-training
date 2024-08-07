@@ -1,7 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Temperature extends StatelessWidget {
-  const Temperature({super.key});
+  const Temperature({
+    required this.minTemperature,
+    required this.maxTemperature,
+    super.key,
+  });
+
+  final int? minTemperature;
+  final int? maxTemperature;
 
   @override
   Widget build(BuildContext context) {
@@ -11,24 +19,31 @@ class Temperature extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Text(
-            '** ℃',
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.red),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(
-            '** ℃',
+            '${minTemperature ?? "**"} ℃',
             style: Theme.of(context)
                 .textTheme
                 .labelLarge!
                 .copyWith(color: Colors.blue),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Text(
+            '${maxTemperature ?? "**"} ℃',
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(color: Colors.red),
+          ),
+        ),
       ],
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IntProperty('minTemperature', minTemperature));
+    properties.add(IntProperty('maxTemperature', maxTemperature));
   }
 }
