@@ -8,9 +8,16 @@ part of 'weather_model.dart';
 
 _$WeatherParameterModelImpl _$$WeatherParameterModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$WeatherParameterModelImpl(
-      area: json['area'] as String,
-      date: DateTime.parse(json['date'] as String),
+    $checkedCreate(
+      r'_$WeatherParameterModelImpl',
+      json,
+      ($checkedConvert) {
+        final val = _$WeatherParameterModelImpl(
+          area: $checkedConvert('area', (v) => v as String),
+          date: $checkedConvert('date', (v) => DateTime.parse(v as String)),
+        );
+        return val;
+      },
     );
 
 Map<String, dynamic> _$$WeatherParameterModelImplToJson(
@@ -22,12 +29,26 @@ Map<String, dynamic> _$$WeatherParameterModelImplToJson(
 
 _$WeatherResponseModelImpl _$$WeatherResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$WeatherResponseModelImpl(
-      weatherCondition:
-          $enumDecode(_$WeatherTypeEnumMap, json['weather_condition']),
-      maxTemperature: (json['max_temperature'] as num).toInt(),
-      minTemperature: (json['min_temperature'] as num).toInt(),
-      date: DateTime.parse(json['date'] as String),
+    $checkedCreate(
+      r'_$WeatherResponseModelImpl',
+      json,
+      ($checkedConvert) {
+        final val = _$WeatherResponseModelImpl(
+          weatherCondition: $checkedConvert(
+              'weather_condition', (v) => $enumDecode(_$WeatherTypeEnumMap, v)),
+          maxTemperature:
+              $checkedConvert('max_temperature', (v) => (v as num).toInt()),
+          minTemperature:
+              $checkedConvert('min_temperature', (v) => (v as num).toInt()),
+          date: $checkedConvert('date', (v) => DateTime.parse(v as String)),
+        );
+        return val;
+      },
+      fieldKeyMap: const {
+        'weatherCondition': 'weather_condition',
+        'maxTemperature': 'max_temperature',
+        'minTemperature': 'min_temperature'
+      },
     );
 
 Map<String, dynamic> _$$WeatherResponseModelImplToJson(
