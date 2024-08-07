@@ -13,15 +13,18 @@ class ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        TextButton(
-          onPressed: closePressed,
-          child: const Text('Close'),
+        Expanded(
+          child: TextButton(
+            onPressed: closePressed,
+            child: const Text('Close'),
+          ),
         ),
-        TextButton(
-          onPressed: reloadPressed,
-          child: const Text('Reload'),
+        Expanded(
+          child: TextButton(
+            onPressed: reloadPressed,
+            child: const Text('Reload'),
+          ),
         ),
       ],
     );

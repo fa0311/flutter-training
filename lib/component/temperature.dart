@@ -15,15 +15,20 @@ class Temperature extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.labelLarge!;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text(
-          '${minTemperature ?? "**"} ℃',
-          style: textStyle.copyWith(color: Colors.blue),
+        Expanded(
+          child: Text(
+            textAlign: TextAlign.center,
+            '${minTemperature ?? "**"} ℃',
+            style: textStyle.copyWith(color: Colors.blue),
+          ),
         ),
-        Text(
-          '${maxTemperature ?? "**"} ℃',
-          style: textStyle.copyWith(color: Colors.red),
+        Expanded(
+          child: Text(
+            textAlign: TextAlign.center,
+            '${maxTemperature ?? "**"} ℃',
+            style: textStyle.copyWith(color: Colors.red),
+          ),
         ),
       ],
     );
