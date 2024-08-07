@@ -2,6 +2,8 @@
 
 ## 依存関係
 
+`Service` をコアとした、アーキテクチャを作成。
+
 ```mermaid
 flowchart TB
 
@@ -10,17 +12,13 @@ flowchart TB
   end
 
   subgraph Domain
-    Service　--> API
-  end
-
-  subgraph Application
+    API　--> Service
     Model --> Service
   end
 
   subgraph Presentation
-    Controller --> Model
+    Model --> Controller
     Controller --> Service
-    Service .-> Controller
     View --> Controller
   end
 
@@ -55,6 +53,9 @@ lib
 
 ### `domain`
 `Service` を定義する。
+`Data` から取得した情報を抽象化する。
+
+天気データを取得して、アプリの天気モデルにする。
 
 ### `gen`
 自動生成されたファイル群。
@@ -65,8 +66,8 @@ lib
 
 ### `provider`
 `view` のためのコントローラーを定義する。
-`Service` をユースケースまで抽象化する。
-依存性注入が可能。
+
+アプリの天気モデルを `view` に渡す。
 
 ### `util`
 アプリ全体で使用するユーティリティを定義する。
