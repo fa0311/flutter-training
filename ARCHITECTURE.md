@@ -13,11 +13,10 @@ flowchart TB
 
   subgraph Domain
     API　--> Service
-    Model --> Service
+    Service --> Model
   end
 
   subgraph Presentation
-    Model --> Controller
     Controller --> Service
     View --> Controller
   end
