@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yumemi_weather/yumemi_weather.dart';
 
 class WeatherService {
@@ -12,7 +13,7 @@ class WeatherService {
   String _serialize({required String area, required DateTime date}) {
     try {
       return jsonEncode(WeatherParameterModel(area: area, date: date).toJson());
-    } on Exception {
+    } on FormatException {
       throw WeatherInvalidParameterException();
     }
   }
@@ -35,7 +36,9 @@ class WeatherService {
     try {
       final json = (jsonDecode(raw) as Map).cast<String, dynamic>();
       return WeatherResponseModel.fromJson(json);
-    } on Exception {
+    } on FormatException {
+      throw WeatherInvalidResponseException();
+    } on CheckedFromJsonException {
       throw WeatherInvalidResponseException();
     }
   }
