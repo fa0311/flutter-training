@@ -23,7 +23,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   void _reloadWeather() {
     try {
-      final response = weatherService.fetch();
+      final model = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
+      final response = weatherService.fetch(model);
       setState(() {
         weatherType = response.weatherCondition;
         maxTemperature = response.maxTemperature;

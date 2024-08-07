@@ -10,9 +10,9 @@ class WeatherService {
 
   final YumemiWeather _client;
 
-  String _serialize({required String area, required DateTime date}) {
+  String _serialize(WeatherParameterModel model) {
     try {
-      return jsonEncode(WeatherParameterModel(area: area, date: date).toJson());
+      return jsonEncode(model.toJson());
     } on FormatException {
       throw WeatherInvalidParameterException();
     }
@@ -43,8 +43,8 @@ class WeatherService {
     }
   }
 
-  WeatherResponseModel fetch({DateTime? date, String area = 'tokyo'}) {
-    final jsonString = _serialize(area: area, date: date ?? DateTime.now());
+  WeatherResponseModel fetch(WeatherParameterModel model) {
+    final jsonString = _serialize(model);
     final raw = _request(jsonString);
     return _deserialize(raw);
   }
