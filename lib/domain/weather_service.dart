@@ -42,7 +42,7 @@ class WeatherService {
     try {
       final json = jsonDecode(raw);
       if (json is! Map<String, dynamic>) {
-        throw WeatherInvalidResponseException();
+        throw const FormatException();
       }
       final weatherType = json['weather_condition'].toString();
       return (
