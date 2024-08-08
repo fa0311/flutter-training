@@ -80,8 +80,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: ActionButtons(
-                    closePressed: _closeScreen,
-                    reloadPressed: _reloadWeather,
+                    onClosePressed: _closeScreen,
+                    onReloadPressed: _reloadWeather,
                   ),
                 ),
               ),
