@@ -34,7 +34,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
       debugPrint(weatherType.toString());
     } on WeatherInvalidResponseException catch (e) {
       _showAlertDialog(e.message);
-      debugPrint(e.log);
+      debugPrint(e.source);
     } on WeatherException catch (_) {
       _showAlertDialog();
     }

@@ -5,7 +5,7 @@ class WeatherInvalidParameterException implements WeatherException {}
 class WeatherUnknownException implements WeatherException {}
 
 class WeatherInvalidResponseException implements WeatherException {
-  const WeatherInvalidResponseException([this.message, this.log]);
+  const WeatherInvalidResponseException([this.message, this.source]);
   final String? message;
-  final String? log;
+  final String? source;
 }
