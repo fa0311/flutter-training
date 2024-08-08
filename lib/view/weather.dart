@@ -6,6 +6,7 @@ import 'package:flutter_training/component/action_buttons.dart';
 import 'package:flutter_training/component/temperature.dart';
 import 'package:flutter_training/component/weather_icon.dart';
 import 'package:flutter_training/domain/weather_service.dart';
+import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -31,24 +32,32 @@ class _WeatherScreenState extends State<WeatherScreen> {
         minTemperature = response.minTemperature;
       });
       debugPrint(weatherType.toString());
-    } on Exception catch (_) {
-      unawaited(
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('仮のテキスト'),
-              actions: [
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            );
-          },
-        ),
-      );
+    } on WeatherInvalidResponseException catch (e) {
+      _showAlertDialog(e.message);
+      debugPrint(e.log);
+    } on WeatherException catch (_) {
+      _showAlertDialog();
     }
+  }
+
+  void _showAlertDialog([String? message]) {
+    unawaited(
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('エラーが発生しました'),
+            content: message != null ? Text(message) : null,
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   void _closeScreen() {
