@@ -8,20 +8,6 @@ part of 'weather_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$WeatherParameterModelImpl _$$WeatherParameterModelImplFromJson(
-        Map<String, dynamic> json) =>
-    $checkedCreate(
-      r'_$WeatherParameterModelImpl',
-      json,
-      ($checkedConvert) {
-        final val = _$WeatherParameterModelImpl(
-          area: $checkedConvert('area', (v) => v as String),
-          date: $checkedConvert('date', (v) => DateTime.parse(v as String)),
-        );
-        return val;
-      },
-    );
-
 Map<String, dynamic> _$$WeatherParameterModelImplToJson(
         _$WeatherParameterModelImpl instance) =>
     <String, dynamic>{

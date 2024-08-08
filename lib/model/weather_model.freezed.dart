@@ -14,11 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-WeatherParameterModel _$WeatherParameterModelFromJson(
-    Map<String, dynamic> json) {
-  return _WeatherParameterModel.fromJson(json);
-}
-
 /// @nodoc
 mixin _$WeatherParameterModel {
   String get area => throw _privateConstructorUsedError;
@@ -110,12 +105,9 @@ class __$$WeatherParameterModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 class _$WeatherParameterModelImpl implements _WeatherParameterModel {
   const _$WeatherParameterModelImpl({required this.area, required this.date});
-
-  factory _$WeatherParameterModelImpl.fromJson(Map<String, dynamic> json) =>
-      _$$WeatherParameterModelImplFromJson(json);
 
   @override
   final String area;
@@ -159,9 +151,6 @@ abstract class _WeatherParameterModel implements WeatherParameterModel {
   const factory _WeatherParameterModel(
       {required final String area,
       required final DateTime date}) = _$WeatherParameterModelImpl;
-
-  factory _WeatherParameterModel.fromJson(Map<String, dynamic> json) =
-      _$WeatherParameterModelImpl.fromJson;
 
   @override
   String get area;

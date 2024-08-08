@@ -9,15 +9,12 @@ enum WeatherType {
   rainy,
 }
 
-@freezed
+@Freezed(toJson: true)
 class WeatherParameterModel with _$WeatherParameterModel {
   const factory WeatherParameterModel({
     required String area,
     required DateTime date,
   }) = _WeatherParameterModel;
-
-  factory WeatherParameterModel.fromJson(Map<String, dynamic> json) =>
-      _$WeatherParameterModelFromJson(json);
 }
 
 @freezed
