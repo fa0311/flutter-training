@@ -31,10 +31,16 @@ class ActionButtons extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      ObjectFlagProperty<VoidCallback?>.has('reloadPressed', onReloadPressed),
+      ObjectFlagProperty<VoidCallback?>.has(
+        'onReloadPressed',
+        onReloadPressed,
+      ),
     );
     properties.add(
-      ObjectFlagProperty<VoidCallback?>.has('closePressed', onClosePressed),
+      ObjectFlagProperty<VoidCallback?>.has(
+        'onClosePressed',
+        onClosePressed,
+      ),
     );
   }
 }
