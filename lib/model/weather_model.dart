@@ -11,7 +11,6 @@ enum WeatherType {
 
 @freezed
 class WeatherParameterModel with _$WeatherParameterModel {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory WeatherParameterModel({
     required String area,
     required DateTime date,
@@ -23,7 +22,6 @@ class WeatherParameterModel with _$WeatherParameterModel {
 
 @freezed
 class WeatherResponseModel with _$WeatherResponseModel {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory WeatherResponseModel({
     required WeatherType weatherCondition,
     required int maxTemperature,

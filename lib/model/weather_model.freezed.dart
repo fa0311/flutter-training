@@ -110,8 +110,7 @@ class __$$WeatherParameterModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class _$WeatherParameterModelImpl implements _WeatherParameterModel {
   const _$WeatherParameterModelImpl({required this.area, required this.date});
 
@@ -297,8 +296,7 @@ class __$$WeatherResponseModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class _$WeatherResponseModelImpl implements _WeatherResponseModel {
   const _$WeatherResponseModelImpl(
       {required this.weatherCondition,
