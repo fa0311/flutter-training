@@ -13,27 +13,21 @@ class Temperature extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme.labelLarge!;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+        Expanded(
           child: Text(
+            textAlign: TextAlign.center,
             '${minTemperature ?? "**"} ℃',
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.blue),
+            style: textStyle.copyWith(color: Colors.blue),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+        Expanded(
           child: Text(
+            textAlign: TextAlign.center,
             '${maxTemperature ?? "**"} ℃',
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge!
-                .copyWith(color: Colors.red),
+            style: textStyle.copyWith(color: Colors.red),
           ),
         ),
       ],

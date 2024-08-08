@@ -79,16 +79,19 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     ? WeatherIcon(weatherType: weatherType!)
                     : const Placeholder(),
               ),
-              Temperature(
-                minTemperature: minTemperature,
-                maxTemperature: maxTemperature,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Temperature(
+                  minTemperature: minTemperature,
+                  maxTemperature: maxTemperature,
+                ),
               ),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: ActionButtons(
-                    closePressed: _closeScreen,
-                    reloadPressed: _reloadWeather,
+                    onClosePressed: _closeScreen,
+                    onReloadPressed: _reloadWeather,
                   ),
                 ),
               ),

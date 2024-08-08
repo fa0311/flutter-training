@@ -3,25 +3,28 @@ import 'package:flutter/material.dart';
 
 class ActionButtons extends StatelessWidget {
   const ActionButtons({
-    required this.reloadPressed,
-    required this.closePressed,
+    required this.onReloadPressed,
+    required this.onClosePressed,
     super.key,
   });
-  final VoidCallback? reloadPressed;
-  final VoidCallback? closePressed;
+  final VoidCallback? onReloadPressed;
+  final VoidCallback? onClosePressed;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        TextButton(
-          onPressed: closePressed,
-          child: const Text('Close'),
+        Expanded(
+          child: TextButton(
+            onPressed: onClosePressed,
+            child: const Text('Close'),
+          ),
         ),
-        TextButton(
-          onPressed: reloadPressed,
-          child: const Text('Reload'),
+        Expanded(
+          child: TextButton(
+            onPressed: onReloadPressed,
+            child: const Text('Reload'),
+          ),
         ),
       ],
     );
@@ -31,10 +34,16 @@ class ActionButtons extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(
-      ObjectFlagProperty<VoidCallback?>.has('reloadPressed', reloadPressed),
+      ObjectFlagProperty<VoidCallback?>.has(
+        'onReloadPressed',
+        onReloadPressed,
+      ),
     );
     properties.add(
-      ObjectFlagProperty<VoidCallback?>.has('closePressed', closePressed),
+      ObjectFlagProperty<VoidCallback?>.has(
+        'onClosePressed',
+        onClosePressed,
+      ),
     );
   }
 }
