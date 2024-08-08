@@ -12,23 +12,19 @@ import 'package:yumemi_weather/yumemi_weather.dart';
 import 'weather_service_test.mocks.dart';
 
 void main() {
-  test('fetch が動作するかどうか', () async {
-    final mock = MockYumemiWeather();
-    final service = WeatherService(client: mock);
+  final mock = MockYumemiWeather();
+  final service = WeatherService(client: mock);
+  final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
 
+  test('動作するかどうか', () async {
     const path = 'test/assets/fetch_weather.json';
     final jsonString = await File(path).readAsString();
 
     when(mock.fetchWeather(any)).thenReturn(jsonString);
-    final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
     final _ = service.fetch(param);
   });
 
-  test('fetch でAPIに invalidParameter エラーが発生したとき', () {
-    final mock = MockYumemiWeather();
-    final service = WeatherService(client: mock);
-    final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
-
+  test('APIに invalidParameter エラーが発生したとき', () {
     when(mock.fetchWeather(any)).thenThrow(YumemiWeatherError.invalidParameter);
     expect(
       () => service.fetch(param),
@@ -36,15 +32,27 @@ void main() {
     );
   });
 
-  test('fetch でAPIに unknown エラーが発生したとき', () {
-    final mock = MockYumemiWeather();
-    final service = WeatherService(client: mock);
-    final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
-
+  test('APIに unknown エラーが発生したとき', () {
     when(mock.fetchWeather(any)).thenThrow(YumemiWeatherError.unknown);
     expect(
       () => service.fetch(param),
       throwsA(const TypeMatcher<WeatherUnknownException>()),
+    );
+  });
+
+  test('APIがJSON以外の応答を返したとき', () {
+    when(mock.fetchWeather(any)).thenReturn('hello world!');
+    expect(
+      () => service.fetch(param),
+      throwsA(const TypeMatcher<WeatherInvalidResponseException>()),
+    );
+  });
+
+  test('APIにが異なるJSONフォーマットを返したとき', () {
+    when(mock.fetchWeather(any)).thenReturn('{"key":"value"}');
+    expect(
+      () => service.fetch(param),
+      throwsA(const TypeMatcher<WeatherInvalidResponseException>()),
     );
   });
 }
