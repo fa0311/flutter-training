@@ -2,7 +2,7 @@
 
 ## 依存関係
 
-`Service` をコアとした、アーキテクチャを作成。
+`Domain` をコアとした、アーキテクチャを作成。
 
 ```mermaid
 flowchart TB
