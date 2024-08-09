@@ -16,15 +16,17 @@ void main() {
   final service = WeatherService(client: mock);
   final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
 
-  test('動作するかどうか', () async {
+  test('fetchが呼び出されたかどうか', () async {
     const path = 'test/assets/fetch_weather.json';
     final jsonString = await File(path).readAsString();
 
     when(mock.fetchWeather(any)).thenReturn(jsonString);
-    final _ = service.fetch(param);
+    final value = service.fetch(param);
+    verify(mock.fetchWeather(any)).called(1);
+    expect(value, isA<WeatherResponseModel>());
   });
 
-  test('APIに invalidParameter エラーが発生したとき', () {
+  test('APIにInvalidParameterエラーが発生したとき', () {
     when(mock.fetchWeather(any)).thenThrow(YumemiWeatherError.invalidParameter);
     expect(
       () => service.fetch(param),
@@ -32,7 +34,7 @@ void main() {
     );
   });
 
-  test('APIに unknown エラーが発生したとき', () {
+  test('APIにUnknownエラーが発生したとき', () {
     when(mock.fetchWeather(any)).thenThrow(YumemiWeatherError.unknown);
     expect(
       () => service.fetch(param),
@@ -48,7 +50,15 @@ void main() {
     );
   });
 
-  test('APIにが異なるJSONフォーマットを返したとき', () {
+  test('APIがJSONを返したが、トップレベルがMAPではないとき', () {
+    when(mock.fetchWeather(any)).thenReturn('"hello world!"');
+    expect(
+      () => service.fetch(param),
+      throwsA(const TypeMatcher<WeatherInvalidResponseException>()),
+    );
+  });
+
+  test('APIが異なるJSONフォーマットを返したとき', () {
     when(mock.fetchWeather(any)).thenReturn('{"key":"value"}');
     expect(
       () => service.fetch(param),
