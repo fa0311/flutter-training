@@ -4,26 +4,14 @@ class WeatherException implements Exception {
   final String? source;
 }
 
-class WeatherInvalidParameterException implements WeatherException {
-  const WeatherInvalidParameterException([this.message, this.source]);
-  @override
-  final String? message;
-  @override
-  final String? source;
+class WeatherInvalidParameterException extends WeatherException {
+  const WeatherInvalidParameterException([super.message, super.source]);
 }
 
-class WeatherUnknownException implements WeatherException {
-  const WeatherUnknownException([this.message, this.source]);
-  @override
-  final String? message;
-  @override
-  final String? source;
+class WeatherUnknownException extends WeatherException {
+  const WeatherUnknownException([super.message, super.source]);
 }
 
-class WeatherInvalidResponseException implements WeatherException {
-  const WeatherInvalidResponseException([this.message, this.source]);
-  @override
-  final String? message;
-  @override
-  final String? source;
+class WeatherInvalidResponseException extends WeatherException {
+  const WeatherInvalidResponseException([super.message, super.source]);
 }

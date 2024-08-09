@@ -32,11 +32,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
         minTemperature = response.minTemperature;
       });
       debugPrint(weatherType.toString());
-    } on WeatherInvalidResponseException catch (e) {
+    } on WeatherException catch (e) {
       _showAlertDialog(e.message);
-      debugPrint(e.source);
-    } on WeatherException catch (_) {
-      _showAlertDialog();
+      if (e.source != null) {
+        debugPrint(e.source);
+      }
     }
   }
 
