@@ -6,6 +6,7 @@ import 'package:flutter_training/component/action_buttons.dart';
 import 'package:flutter_training/component/temperature.dart';
 import 'package:flutter_training/component/weather_icon.dart';
 import 'package:flutter_training/domain/weather_service.dart';
+import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 
 class WeatherScreen extends StatefulWidget {
@@ -23,34 +24,40 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   void _reloadWeather() {
     try {
-      final response = weatherService.fetch(
-        area: 'tokyo',
-        date: DateTime.now(),
-      );
+      final model = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
+      final response = weatherService.fetch(model);
       setState(() {
         weatherType = response.weatherCondition;
         maxTemperature = response.maxTemperature;
         minTemperature = response.minTemperature;
       });
       debugPrint(weatherType.toString());
-    } on Exception {
-      unawaited(
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('仮のテキスト'),
-              actions: [
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            );
-          },
-        ),
-      );
+    } on WeatherException catch (e) {
+      _showAlertDialog(e.message);
+      if (e.source != null) {
+        debugPrint(e.source);
+      }
     }
+  }
+
+  void _showAlertDialog([String? message]) {
+    unawaited(
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('エラーが発生しました'),
+            content: message != null ? Text(message) : null,
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   void _closeScreen() {

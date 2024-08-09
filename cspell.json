@@ -1,0 +1,22 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "ignoreWords": ["yumemi", "unawaited"],
+  "ignorePaths": [
+    "android/**",
+    "ios/**",
+    "windows/**",
+    "build/**",
+    "node_modules/**",
+    ".metadata",
+    "cspell.json",
+    "pubspec.lock",
+    "pubspec.yaml",
+    "**/*.g.dart",
+    "**/*.freezed.dart",
+    "**/*.gr.dart",
+    "**/*.mocks.dart",
+    "**/assets/**",
+    "*.log"
+  ]
+}

@@ -1,7 +1,17 @@
-class WeatherException implements Exception {}
+abstract class WeatherException implements Exception {
+  const WeatherException([this.message, this.source]);
+  final String? message;
+  final String? source;
+}
 
-class WeatherInvalidParameterException implements WeatherException {}
+class WeatherInvalidParameterException extends WeatherException {
+  const WeatherInvalidParameterException([super.message, super.source]);
+}
 
-class WeatherUnknownException implements WeatherException {}
+class WeatherUnknownException extends WeatherException {
+  const WeatherUnknownException([super.message, super.source]);
+}
 
-class WeatherInvalidResponseException implements WeatherException {}
+class WeatherInvalidResponseException extends WeatherException {
+  const WeatherInvalidResponseException([super.message, super.source]);
+}
