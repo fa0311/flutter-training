@@ -11,11 +11,7 @@ class WeatherService {
   final YumemiWeather _client;
 
   String _serialize(WeatherParameterModel model) {
-    try {
-      return jsonEncode(model.toJson());
-    } on FormatException {
-      throw WeatherInvalidParameterException();
-    }
+    return jsonEncode(model.toJson());
   }
 
   String _request(String jsonString) {
@@ -25,21 +21,24 @@ class WeatherService {
     } on YumemiWeatherError catch (e) {
       switch (e) {
         case YumemiWeatherError.invalidParameter:
-          throw WeatherInvalidParameterException();
+          throw const WeatherInvalidParameterException('Invalid Parameter');
         case YumemiWeatherError.unknown:
-          throw WeatherUnknownException();
+          throw const WeatherUnknownException('Unknown');
       }
     }
   }
 
   WeatherResponseModel _deserialize(String raw) {
     try {
-      final json = (jsonDecode(raw) as Map).cast<String, dynamic>();
+      final json = jsonDecode(raw);
+      if (json is! Map<String, dynamic>) {
+        throw FormatException('Unexpected type', json);
+      }
       return WeatherResponseModel.fromJson(json);
-    } on FormatException {
-      throw WeatherInvalidResponseException();
-    } on CheckedFromJsonException {
-      throw WeatherInvalidResponseException();
+    } on FormatException catch (e) {
+      throw WeatherInvalidResponseException(e.message, e.toString());
+    } on CheckedFromJsonException catch (e) {
+      throw WeatherInvalidResponseException(e.message, e.toString());
     }
   }
 

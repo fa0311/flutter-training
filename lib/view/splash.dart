@@ -16,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> with EndOfFrameMixin {
 
   @override
   Future<void> endOfFrame() async {
+    // `while (true)` で Navigator が何度 pop しても同様の処理を行う
     while (true) {
       await Future<void>.delayed(const Duration(milliseconds: 500));
       if (!mounted) {

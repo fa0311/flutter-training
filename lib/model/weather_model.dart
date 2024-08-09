@@ -9,21 +9,16 @@ enum WeatherType {
   rainy,
 }
 
-@freezed
+@Freezed(toJson: true)
 class WeatherParameterModel with _$WeatherParameterModel {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory WeatherParameterModel({
     required String area,
     required DateTime date,
   }) = _WeatherParameterModel;
-
-  factory WeatherParameterModel.fromJson(Map<String, dynamic> json) =>
-      _$WeatherParameterModelFromJson(json);
 }
 
 @freezed
 class WeatherResponseModel with _$WeatherResponseModel {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory WeatherResponseModel({
     required WeatherType weatherCondition,
     required int maxTemperature,

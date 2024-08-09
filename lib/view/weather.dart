@@ -57,16 +57,19 @@ class WeatherScreen extends ConsumerWidget {
                     ? WeatherIcon(weatherType: weatherResponse.weatherCondition)
                     : const Placeholder(),
               ),
-              Temperature(
-                minTemperature: weatherResponse?.minTemperature,
-                maxTemperature: weatherResponse?.maxTemperature,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Temperature(
+                  minTemperature: weatherResponse?.minTemperature,
+                  maxTemperature: weatherResponse?.maxTemperature,
+                ),
               ),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: ActionButtons(
-                    closePressed: () => _closeScreen(context),
-                    reloadPressed: () => _reloadWeather(context, ref),
+                    onClosePressed: () => _closeScreen(context),
+                    onReloadPressed: () => _reloadWeather(context, ref),
                   ),
                 ),
               ),
