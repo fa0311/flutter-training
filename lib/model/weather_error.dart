@@ -1,4 +1,4 @@
-class WeatherException implements Exception {
+abstract class WeatherException implements Exception {
   const WeatherException([this.message, this.source]);
   final String? message;
   final String? source;
