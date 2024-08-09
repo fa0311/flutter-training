@@ -21,9 +21,9 @@ class WeatherService {
     } on YumemiWeatherError catch (e) {
       switch (e) {
         case YumemiWeatherError.invalidParameter:
-          throw WeatherInvalidParameterException();
+          throw const WeatherInvalidParameterException('Invalid Parameter');
         case YumemiWeatherError.unknown:
-          throw WeatherUnknownException();
+          throw const WeatherUnknownException('Unknown');
       }
     }
   }
@@ -32,7 +32,7 @@ class WeatherService {
     try {
       final json = jsonDecode(raw);
       if (json is! Map<String, dynamic>) {
-        throw const FormatException();
+        throw FormatException('Unexpected type', json);
       }
       return WeatherResponseModel.fromJson(json);
     } on FormatException catch (e) {
