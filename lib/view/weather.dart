@@ -5,8 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/component/action_buttons.dart';
 import 'package:flutter_training/component/temperature.dart';
 import 'package:flutter_training/component/weather_icon.dart';
+import 'package:flutter_training/controller/weather_controller.dart';
 import 'package:flutter_training/model/weather_model.dart';
-import 'package:flutter_training/provider/weather_provider.dart';
 
 class WeatherScreen extends ConsumerWidget {
   const WeatherScreen({super.key});

@@ -2,7 +2,7 @@
 
 // ignore_for_file: type=lint, duplicate_ignore
 
-part of 'weather_provider.dart';
+part of 'weather_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
