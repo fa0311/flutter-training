@@ -6,6 +6,7 @@ import 'package:flutter_training/component/action_buttons.dart';
 import 'package:flutter_training/component/temperature.dart';
 import 'package:flutter_training/component/weather_icon.dart';
 import 'package:flutter_training/controller/weather_controller.dart';
+import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 
 class WeatherScreen extends ConsumerWidget {
@@ -16,13 +17,14 @@ class WeatherScreen extends ConsumerWidget {
       final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
       final newState = ref.read(fetchWeatherProvider(param));
       ref.read(weatherResponseStateProvider.notifier).update(newState);
-    } on Exception catch (_) {
+    } on WeatherException catch (e) {
       unawaited(
         showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text('仮のテキスト'),
+              title: const Text('エラーが発生しました'),
+              content: e.message != null ? Text(e.message!) : null,
               actions: [
                 TextButton(
                   child: const Text('OK'),
