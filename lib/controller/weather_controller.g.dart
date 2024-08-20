@@ -173,7 +173,7 @@ class _FetchWeatherProviderElement extends ProviderElement<WeatherResponseModel>
 }
 
 String _$weatherResponseStateHash() =>
-    r'e26989e9bdf21a4c0dc2f69de3cf9c360af8d503';
+    r'f840beab79c9dbb0f15aca5b245f84d4924fa6a5';
 
 /// See also [WeatherResponseState].
 @ProviderFor(WeatherResponseState)

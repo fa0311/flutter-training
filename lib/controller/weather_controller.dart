@@ -25,7 +25,7 @@ class WeatherResponseState extends _$WeatherResponseState {
     return null;
   }
 
-  void update(WeatherResponseModel newState) {
-    state = newState;
+  void fetch(WeatherParameterModel param) {
+    state = ref.read(fetchWeatherProvider(param));
   }
 }

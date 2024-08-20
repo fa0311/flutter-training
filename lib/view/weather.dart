@@ -15,8 +15,7 @@ class WeatherScreen extends ConsumerWidget {
   void _reloadWeather(BuildContext context, WidgetRef ref) {
     try {
       final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
-      final newState = ref.read(fetchWeatherProvider(param));
-      ref.read(weatherResponseStateProvider.notifier).update(newState);
+      ref.read(weatherResponseStateProvider.notifier).fetch(param);
     } on WeatherException catch (e) {
       unawaited(
         showDialog(
