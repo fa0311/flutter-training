@@ -12,7 +12,8 @@ flowchart TB
   end
 
   subgraph Domain
-    API --> Service
+    ImplementedService --> API
+    ImplementedService --> Service
     Service --> Model
   end
 
@@ -22,6 +23,8 @@ flowchart TB
   end
 
 ```
+
+`Dart` には `Implicit interfaces` があるため `Service` と `ImplementedService` を一つのクラスで記述している
 
 ## ファイル構成
 
