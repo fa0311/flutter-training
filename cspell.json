@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "language": "en",
-  "ignoreWords": ["yumemi", "unawaited"],
+  "ignoreWords": ["yumemi", "unawaited", "riverpod"],
   "ignorePaths": [
     "android/**",
     "ios/**",
