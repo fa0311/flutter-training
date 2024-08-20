@@ -12,7 +12,7 @@ flowchart TB
   end
 
   subgraph Domain
-    API　--> Service
+    API --> Service
     Service --> Model
   end
 
@@ -46,30 +46,36 @@ lib
     └── *.dart
 ```
 
-
 ### `component`
-`view` のための再利用可能なUI要素を定義する。
+
+`view` のための再利用可能な UI 要素を定義する。
 
 ### `domain`
+
 `Service` を定義する。
 `Data` から取得した情報を抽象化する。
 
 天気データを取得して、アプリの天気モデルにする。
 
 ### `gen`
+
 自動生成されたファイル群。
 
 ### `model`
+
 `Model` を定義する。
 データのシリアライズやデシリアライズを担う。
 
 ### `provider`
+
 `view` のためのコントローラーを定義する。
 
 アプリの天気モデルを `view` に渡す。
 
 ### `util`
+
 アプリ全体で使用するユーティリティを定義する。
 
 ### `view`
-アプリのUIやレイアウトを定義する。
+
+アプリの UI やレイアウトを定義する。
