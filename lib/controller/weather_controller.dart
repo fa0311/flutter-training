@@ -19,7 +19,7 @@ WeatherResponseModel fetchWeather(
 }
 
 @riverpod
-class WeatherResponseState extends _$WeatherResponseState {
+class WeatherNotifier extends _$WeatherNotifier {
   @override
   WeatherResponseModel? build() {
     return null;

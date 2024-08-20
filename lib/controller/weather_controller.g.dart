@@ -172,22 +172,21 @@ class _FetchWeatherProviderElement extends ProviderElement<WeatherResponseModel>
   WeatherParameterModel get param => (origin as FetchWeatherProvider).param;
 }
 
-String _$weatherResponseStateHash() =>
-    r'f840beab79c9dbb0f15aca5b245f84d4924fa6a5';
+String _$weatherNotifierHash() => r'317db339e9d9ef43b1320f5efd7140994186acde';
 
-/// See also [WeatherResponseState].
-@ProviderFor(WeatherResponseState)
-final weatherResponseStateProvider = AutoDisposeNotifierProvider<
-    WeatherResponseState, WeatherResponseModel?>.internal(
-  WeatherResponseState.new,
-  name: r'weatherResponseStateProvider',
+/// See also [WeatherNotifier].
+@ProviderFor(WeatherNotifier)
+final weatherNotifierProvider = AutoDisposeNotifierProvider<WeatherNotifier,
+    WeatherResponseModel?>.internal(
+  WeatherNotifier.new,
+  name: r'weatherNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$weatherResponseStateHash,
+      : _$weatherNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$WeatherResponseState = AutoDisposeNotifier<WeatherResponseModel?>;
+typedef _$WeatherNotifier = AutoDisposeNotifier<WeatherResponseModel?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
