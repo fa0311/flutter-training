@@ -31,15 +31,15 @@ lib
 ├── app.dart
 ├── component
 │   └── *.dart
-├── domain
+├── service
 │   └── *_service.dart
 ├── gen
 │   └── assets.gen.dart
 ├── model
 │   ├── *_error.dart
 │   └── *_model.dart
-├── provider
-│   └── *_provider.dart
+├── controller
+│   └── *_controller.dart
 ├── util
 │   └── *.dart
 └── view
@@ -50,7 +50,7 @@ lib
 
 `view` のための再利用可能な UI 要素を定義する。
 
-### `domain`
+### `service`
 
 `Service` を定義する。
 `Data` から取得した情報を抽象化する。
@@ -66,7 +66,7 @@ lib
 `Model` を定義する。
 データのシリアライズやデシリアライズを担う。
 
-### `provider`
+### `controller`
 
 `view` のためのコントローラーを定義する。
 
