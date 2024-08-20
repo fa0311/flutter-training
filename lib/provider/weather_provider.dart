@@ -25,7 +25,7 @@ class WeatherResponseState extends _$WeatherResponseState {
     return null;
   }
 
-  void change(WeatherResponseModel newState) {
+  void update(WeatherResponseModel newState) {
     state = newState;
   }
 }
