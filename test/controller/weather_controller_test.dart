@@ -22,7 +22,7 @@ void main() {
   test('fetchが呼び出されたかどうか', () {
     final container = ProviderContainer(
       overrides: [
-        weatherServiceProvider.overrideWith((_) => mock),
+        weatherServiceProvider.overrideWithValue(mock),
       ],
     );
     addTearDown(container.dispose);
@@ -36,7 +36,7 @@ void main() {
   test('デフォルトがnullか', () {
     final container = ProviderContainer(
       overrides: [
-        weatherServiceProvider.overrideWith((_) => mock),
+        weatherServiceProvider.overrideWithValue(mock),
       ],
     );
     addTearDown(container.dispose);
@@ -48,7 +48,7 @@ void main() {
   test('stateを更新する', () {
     final container = ProviderContainer(
       overrides: [
-        weatherServiceProvider.overrideWith((_) => mock),
+        weatherServiceProvider.overrideWithValue(mock),
       ],
     );
     addTearDown(container.dispose);
