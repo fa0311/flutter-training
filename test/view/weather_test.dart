@@ -32,7 +32,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          weatherServiceProvider.overrideWith((_) => mock),
+          weatherServiceProvider.overrideWithValue(mock),
         ],
         child: const MaterialApp(
           home: WeatherScreen(),
