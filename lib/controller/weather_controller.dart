@@ -10,7 +10,7 @@ WeatherService weatherService(WeatherServiceRef ref) {
 }
 
 @Riverpod(keepAlive: true)
-WeatherResponseModel fetchWeather(
+Future<WeatherResponseModel> fetchWeather(
   FetchWeatherRef ref,
   WeatherParameterModel param,
 ) {
@@ -21,11 +21,17 @@ WeatherResponseModel fetchWeather(
 @riverpod
 class WeatherNotifier extends _$WeatherNotifier {
   @override
-  WeatherResponseModel? build() {
+  FutureOr<WeatherResponseModel?> build() {
     return null;
   }
 
-  void fetch(WeatherParameterModel param) {
-    state = ref.read(fetchWeatherProvider(param));
+  Future<void> fetch(WeatherParameterModel param) async {
+    if (state.isLoading) {
+      return;
+    }
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() {
+      return ref.read(fetchWeatherProvider(param).future);
+    });
   }
 }

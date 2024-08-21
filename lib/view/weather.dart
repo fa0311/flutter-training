@@ -44,7 +44,6 @@ class WeatherScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherResponse = ref.watch(weatherNotifierProvider);
-
     return Scaffold(
       body: Center(
         child: FractionallySizedBox(
@@ -54,15 +53,17 @@ class WeatherScreen extends ConsumerWidget {
               const Spacer(),
               AspectRatio(
                 aspectRatio: 1,
-                child: weatherResponse != null
-                    ? WeatherIcon(weatherType: weatherResponse.weatherCondition)
-                    : const Placeholder(),
+                child: switch (weatherResponse) {
+                  AsyncValue(:final WeatherResponseModel value) =>
+                    WeatherIcon(weatherType: value.weatherCondition),
+                  _ => const Placeholder()
+                },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Temperature(
-                  minTemperature: weatherResponse?.minTemperature,
-                  maxTemperature: weatherResponse?.maxTemperature,
+                  minTemperature: weatherResponse.valueOrNull?.minTemperature,
+                  maxTemperature: weatherResponse.valueOrNull?.maxTemperature,
                 ),
               ),
               Flexible(
