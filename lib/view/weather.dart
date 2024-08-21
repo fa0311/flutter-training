@@ -1,71 +1,50 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_training/component/action_buttons.dart';
 import 'package:flutter_training/component/temperature.dart';
 import 'package:flutter_training/component/weather_icon.dart';
-import 'package:flutter_training/domain/weather_service.dart';
+import 'package:flutter_training/controller/weather_controller.dart';
 import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 
-class WeatherScreen extends StatefulWidget {
+class WeatherScreen extends ConsumerWidget {
   const WeatherScreen({super.key});
 
-  @override
-  State<WeatherScreen> createState() => _WeatherScreenState();
-}
-
-class _WeatherScreenState extends State<WeatherScreen> {
-  final WeatherService weatherService = WeatherService();
-  WeatherType? weatherType;
-  int? maxTemperature;
-  int? minTemperature;
-
-  void _reloadWeather() {
+  void _reloadWeather(BuildContext context, WidgetRef ref) {
     try {
-      final model = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
-      final response = weatherService.fetch(model);
-      setState(() {
-        weatherType = response.weatherCondition;
-        maxTemperature = response.maxTemperature;
-        minTemperature = response.minTemperature;
-      });
-      debugPrint(weatherType.toString());
+      final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
+      ref.read(weatherNotifierProvider.notifier).fetch(param);
     } on WeatherException catch (e) {
-      _showAlertDialog(e.message);
-      if (e.source != null) {
-        debugPrint(e.source);
-      }
+      unawaited(
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('エラーが発生しました'),
+              content: e.message != null ? Text(e.message!) : null,
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            );
+          },
+        ),
+      );
     }
   }
 
-  void _showAlertDialog([String? message]) {
-    unawaited(
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('エラーが発生しました'),
-            content: message != null ? Text(message) : null,
-            actions: [
-              TextButton(
-                child: const Text('OK'),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  void _closeScreen() {
+  void _closeScreen(BuildContext context) {
     Navigator.of(context).pop();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final weatherResponse = ref.watch(weatherNotifierProvider);
+
     return Scaffold(
       body: Center(
         child: FractionallySizedBox(
@@ -75,23 +54,23 @@ class _WeatherScreenState extends State<WeatherScreen> {
               const Spacer(),
               AspectRatio(
                 aspectRatio: 1,
-                child: weatherType != null
-                    ? WeatherIcon(weatherType: weatherType!)
+                child: weatherResponse != null
+                    ? WeatherIcon(weatherType: weatherResponse.weatherCondition)
                     : const Placeholder(),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Temperature(
-                  minTemperature: minTemperature,
-                  maxTemperature: maxTemperature,
+                  minTemperature: weatherResponse?.minTemperature,
+                  maxTemperature: weatherResponse?.maxTemperature,
                 ),
               ),
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: ActionButtons(
-                    onClosePressed: _closeScreen,
-                    onReloadPressed: _reloadWeather,
+                    onClosePressed: () => _closeScreen(context),
+                    onReloadPressed: () => _reloadWeather(context, ref),
                   ),
                 ),
               ),
@@ -100,16 +79,5 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-      DiagnosticsProperty<WeatherService>('weatherService', weatherService),
-    );
-    properties.add(EnumProperty<WeatherType?>('weatherType', weatherType));
-    properties.add(IntProperty('maxTemperature', maxTemperature));
-    properties.add(IntProperty('minTemperature', minTemperature));
   }
 }
