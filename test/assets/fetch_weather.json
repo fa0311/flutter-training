@@ -1,6 +1,6 @@
 {
-    "weather_condition": "sunny",
-    "max_temperature": 25,
-    "min_temperature": -9,
-    "date": "2024-08-07T14:54:04+09:00"
+  "weather_condition": "sunny",
+  "max_temperature": 25,
+  "min_temperature": -9,
+  "date": "2024-08-07T14:54:04+09:00"
 }
