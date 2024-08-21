@@ -12,38 +12,55 @@ import 'package:flutter_training/model/weather_model.dart';
 class WeatherScreen extends ConsumerWidget {
   const WeatherScreen({super.key});
 
-  void _reloadWeather(BuildContext context, WidgetRef ref) {
-    try {
-      final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
-      ref.read(weatherNotifierProvider.notifier).fetch(param);
-    } on WeatherException catch (e) {
-      unawaited(
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('エラーが発生しました'),
-              content: e.message != null ? Text(e.message!) : null,
-              actions: [
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            );
-          },
-        ),
-      );
-    }
-  }
-
-  void _closeScreen(BuildContext context) {
-    Navigator.of(context).pop();
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherResponse = ref.watch(weatherNotifierProvider);
+
+    ref.listen(weatherNotifierProvider, (prev, next) async {
+      switch (next) {
+        case AsyncData():
+          Navigator.of(context).pop();
+        case AsyncLoading():
+          await showDialog<void>(
+            context: context,
+            builder: (context) {
+              return const Center(child: CircularProgressIndicator());
+            },
+          );
+        case AsyncError(:final WeatherException error):
+          Navigator.of(context).pop();
+          await showDialog<void>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('エラーが発生しました'),
+                content: error.message != null ? Text(error.message!) : null,
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              );
+            },
+          );
+        case _:
+          throw Exception('unreachable');
+      }
+    });
+
+    Future<void> reloadWeather() async {
+      final param = WeatherParameterModel(
+        area: 'tokyo',
+        date: DateTime.now(),
+      );
+      await ref.read(weatherNotifierProvider.notifier).fetch(param);
+    }
+
+    void closeScreen() {
+      Navigator.of(context).pop();
+    }
+
     return Scaffold(
       body: Center(
         child: FractionallySizedBox(
@@ -70,8 +87,8 @@ class WeatherScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 80),
                   child: ActionButtons(
-                    onClosePressed: () => _closeScreen(context),
-                    onReloadPressed: () => _reloadWeather(context, ref),
+                    onClosePressed: closeScreen,
+                    onReloadPressed: reloadWeather,
                   ),
                 ),
               ),
