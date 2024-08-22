@@ -15,20 +15,16 @@ import 'weather_test.mocks.dart';
 
 void main() {
   final mock = MockWeatherService();
-  final response = WeatherResponseModel(
-    weatherCondition: WeatherType.cloudy,
+  final baseResponse = WeatherResponseModel(
+    weatherCondition: WeatherType.sunny,
     maxTemperature: 10,
     minTemperature: -10,
     date: DateTime(2020),
   );
 
-  testWidgets('気温と晴れが正しく表示されているかどうか', (tester) async {
-    // デフォルトのサイズが小さすぎて画面からはみ出してしまう
-    // https://stackoverflow.com/questions/53706569/how-to-test-flutter-widgets-on-different-screen-sizes
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(2400, 1600);
-
-    when(mock.fetch(any)).thenReturn(response);
+  testWidgets('気温が正しく表示されているかどうか', (tester) async {
+    setPhysicalSize(tester);
+    when(mock.fetch(any)).thenReturn(baseResponse);
 
     await tester.pumpWidget(
       ProviderScope(
@@ -43,14 +39,79 @@ void main() {
 
     await tester.tap(find.text('Reload'));
     await tester.pumpAndSettle();
-
-    // SVG が表示されていることを確認する
-    expect(find.findBySvgPicture(Assets.weather.cloudy.svg()), findsOneWidget);
-
-    // 最高気温が表示されることを確認
     expect(find.text('10 ℃'), findsOneWidget);
-
-    // 最低気温が表示されることを確認
     expect(find.text('-10 ℃'), findsOneWidget);
+  });
+
+  testWidgets('sunnyが正しく表示されているかどうか', (tester) async {
+    setPhysicalSize(tester);
+    when(mock.fetch(any)).thenReturn(
+      baseResponse.copyWith(
+        weatherCondition: WeatherType.sunny,
+      ),
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherServiceProvider.overrideWithValue(mock),
+        ],
+        child: const MaterialApp(
+          home: WeatherScreen(),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Reload'));
+    await tester.pumpAndSettle();
+    expect(find.findBySvgPicture(Assets.weather.sunny.svg()), findsOneWidget);
+  });
+
+  testWidgets('cloudyが正しく表示されているかどうか', (tester) async {
+    setPhysicalSize(tester);
+    when(mock.fetch(any)).thenReturn(
+      baseResponse.copyWith(
+        weatherCondition: WeatherType.cloudy,
+      ),
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherServiceProvider.overrideWithValue(mock),
+        ],
+        child: const MaterialApp(
+          home: WeatherScreen(),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Reload'));
+    await tester.pumpAndSettle();
+    expect(find.findBySvgPicture(Assets.weather.cloudy.svg()), findsOneWidget);
+  });
+
+  testWidgets('rainyが正しく表示されているかどうか', (tester) async {
+    setPhysicalSize(tester);
+    when(mock.fetch(any)).thenReturn(
+      baseResponse.copyWith(
+        weatherCondition: WeatherType.rainy,
+      ),
+    );
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          weatherServiceProvider.overrideWithValue(mock),
+        ],
+        child: const MaterialApp(
+          home: WeatherScreen(),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Reload'));
+    await tester.pumpAndSettle();
+    expect(find.findBySvgPicture(Assets.weather.rainy.svg()), findsOneWidget);
   });
 }
