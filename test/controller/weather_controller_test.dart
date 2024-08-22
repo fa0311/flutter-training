@@ -19,7 +19,7 @@ void main() {
   );
   final param = WeatherParameterModel(area: 'tokyo', date: DateTime(2024));
 
-  test('controllerのfetchが呼び出されたとき', () {
+  test('controllerのfetchが呼び出されたとき, serviceのfetchが1度だけ呼び出される', () {
     final container = ProviderContainer(
       overrides: [
         weatherServiceProvider.overrideWithValue(mock),
@@ -30,7 +30,6 @@ void main() {
     when(mock.fetch(any)).thenReturn(response);
     final value = container.read(fetchWeatherProvider(param));
 
-    // serviceのfetchが1度だけ呼び出される
     verify(mock.fetch(any)).called(1);
     expect(value, isA<WeatherResponseModel>());
   });

@@ -16,14 +16,13 @@ void main() {
   final service = WeatherService(client: mock);
   final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
 
-  test('serviceのfetchが呼び出されたとき', () async {
+  test('serviceのfetchが呼び出されたとき, APIのfetchが1度だけ呼び出される', () async {
     const path = 'test/assets/fetch_weather.json';
     final jsonString = await File(path).readAsString();
 
     when(mock.fetchWeather(any)).thenReturn(jsonString);
     final value = service.fetch(param);
 
-    // APIのfetchが1度だけ呼び出される
     verify(mock.fetchWeather(any)).called(1);
     expect(value, isA<WeatherResponseModel>());
   });
