@@ -26,37 +26,15 @@ void main() {
       ],
     );
     addTearDown(container.dispose);
-
     when(mock.fetch(any)).thenReturn(response);
-    final value = container.read(fetchWeatherProvider(param));
 
-    verify(mock.fetch(any)).called(1);
-    expect(value, isA<WeatherResponseModel>());
-    expect(value, response);
-  });
-
-  test('weatherNotifierProviderのデフォルト値がnullか', () {
-    final container = ProviderContainer(
-      overrides: [
-        weatherServiceProvider.overrideWithValue(mock),
-      ],
-    );
-    addTearDown(container.dispose);
-
-    final defaultState = container.read(weatherNotifierProvider);
-    expect(defaultState, null);
-  });
-
-  test('stateが正しく更新されるかどうか', () {
-    final container = ProviderContainer(
-      overrides: [
-        weatherServiceProvider.overrideWithValue(mock),
-      ],
-    );
-    addTearDown(container.dispose);
+    final value1 = container.read(weatherNotifierProvider);
+    expect(value1, null);
 
     container.read(weatherNotifierProvider.notifier).fetch(param);
-    final value = container.read(weatherNotifierProvider);
-    expect(value, isA<WeatherResponseModel>());
+    final value2 = container.read(weatherNotifierProvider);
+    verify(mock.fetch(any)).called(1);
+    expect(value2, isA<WeatherResponseModel>());
+    expect(value2, response);
   });
 }
