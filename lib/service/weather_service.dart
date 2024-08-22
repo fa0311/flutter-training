@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:isolate';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -17,9 +17,7 @@ class WeatherService {
 
   Future<String> _request(String jsonString) async {
     try {
-      final response = await Isolate.run(() {
-        return _client.syncFetchWeather(jsonString);
-      });
+      final response = await compute(_client.syncFetchWeather, jsonString);
       return response;
     } on YumemiWeatherError catch (e) {
       switch (e) {
