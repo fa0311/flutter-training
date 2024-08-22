@@ -21,12 +21,11 @@ void main() {
 
   testWidgets('気温が表示されているかどうか', (tester) async {
     final robot = WeatherScreenRobot(tester);
-    when(mock.fetch(any)).thenReturn(
-      baseResponse.copyWith(
-        maxTemperature: 10,
-        minTemperature: -10,
-      ),
+    final response = baseResponse.copyWith(
+      maxTemperature: 10,
+      minTemperature: -10,
     );
+    when(mock.fetch(any)).thenAnswer((_) async => response);
 
     await robot.show(
       overrides: [
@@ -41,11 +40,10 @@ void main() {
 
   testWidgets('sunnyが表示されているかどうか', (tester) async {
     final robot = WeatherScreenRobot(tester);
-    when(mock.fetch(any)).thenReturn(
-      baseResponse.copyWith(
-        weatherCondition: WeatherType.sunny,
-      ),
+    final response = baseResponse.copyWith(
+      weatherCondition: WeatherType.sunny,
     );
+    when(mock.fetch(any)).thenAnswer((_) async => response);
 
     await robot.show(
       overrides: [
@@ -59,11 +57,10 @@ void main() {
 
   testWidgets('cloudyが表示されているかどうか', (tester) async {
     final robot = WeatherScreenRobot(tester);
-    when(mock.fetch(any)).thenReturn(
-      baseResponse.copyWith(
-        weatherCondition: WeatherType.cloudy,
-      ),
+    final response = baseResponse.copyWith(
+      weatherCondition: WeatherType.cloudy,
     );
+    when(mock.fetch(any)).thenAnswer((_) async => response);
 
     await robot.show(
       overrides: [
@@ -77,11 +74,10 @@ void main() {
 
   testWidgets('rainyが表示されているかどうか', (tester) async {
     final robot = WeatherScreenRobot(tester);
-    when(mock.fetch(any)).thenReturn(
-      baseResponse.copyWith(
-        weatherCondition: WeatherType.rainy,
-      ),
+    final response = baseResponse.copyWith(
+      weatherCondition: WeatherType.rainy,
     );
+    when(mock.fetch(any)).thenAnswer((_) async => response);
 
     await robot.show(
       overrides: [

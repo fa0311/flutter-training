@@ -27,7 +27,7 @@ class WeatherNotifier extends _$WeatherNotifier {
 
   Future<void> fetch(WeatherParameterModel param) async {
     if (state.isLoading) {
-      return;
+      return ref.read(fetchWeatherProvider(param).future);
     }
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() {
