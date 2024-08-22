@@ -17,7 +17,7 @@ void main() {
   final service = WeatherService(client: mock);
   final param = WeatherParameterModel(area: 'tokyo', date: DateTime.now());
 
-  test('serviceのfetchが呼び出されたとき, APIのfetchが1度だけ呼び出される', () async {
+  test('serviceのfetchが呼び出されたとき, APIのfetchが呼び出される', () async {
     const path = 'test/assets/fetch_weather.json';
     final jsonString = await File(path).readAsString();
     final model = WeatherResponseModel.fromJson(
