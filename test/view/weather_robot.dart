@@ -17,6 +17,9 @@ class WeatherScreenRobot extends Robot<WeatherScreen> {
   Finder textFinder(String text) =>
       find.descendant(of: this, matching: find.text(text));
 
+  Finder textDialogFinder(String text) =>
+      find.descendant(of: find.byType(Dialog), matching: find.text(text));
+
   Future<void> show({required List<Override> overrides}) async {
     tester.view.devicePixelRatio = 1;
     tester.view.physicalSize = const Size(2400, 1600);
@@ -45,4 +48,6 @@ class WeatherScreenRobot extends Robot<WeatherScreen> {
       expect(svgFinder(Assets.weather.rainy.svg()), findsOneWidget);
 
   void expectFindText(String text) => expect(textFinder(text), findsOneWidget);
+  void expectFindTextDialog(String text) =>
+      expect(textDialogFinder(text), findsOneWidget);
 }

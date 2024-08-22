@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_training/controller/weather_controller.dart';
+import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 import 'package:flutter_training/service/weather_service.dart';
 import 'package:mockito/annotations.dart';
@@ -90,5 +91,21 @@ void main() {
 
     await robot.tapReload();
     robot.expectRainyIcon();
+  });
+
+  testWidgets('Exception発生時, 特定のメッセージが表示されているかどうか', (tester) async {
+    final robot = WeatherScreenRobot(tester);
+    when(mock.fetch(any)).thenThrow(
+      const WeatherUnknownException('Unknown'),
+    );
+
+    await robot.show(
+      overrides: [
+        weatherServiceProvider.overrideWithValue(mock),
+      ],
+    );
+
+    await robot.tapReload();
+    robot.expectFindTextDialog('Unknown');
   });
 }
