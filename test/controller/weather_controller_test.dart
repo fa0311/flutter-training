@@ -19,7 +19,21 @@ void main() {
   );
   final param = WeatherParameterModel(area: 'tokyo', date: DateTime(2024));
 
-  test('controllerのfetchが呼び出されたとき, serviceのfetchが呼び出される', () {
+  test('controllerのfetchが呼び出されたとき, serviceのfetchが呼び出される', () async {
+    final container = ProviderContainer(
+      overrides: [
+        weatherServiceProvider.overrideWithValue(mock),
+      ],
+    );
+    addTearDown(container.dispose);
+    when(mock.fetch(any)).thenReturn(response);
+
+    container.read(weatherNotifierProvider.notifier).fetch(param);
+
+    verify(mock.fetch(any)).called(1);
+  });
+
+  test('controllerのfetchが呼び出されたとき, Notifierの値が更新される', () {
     final container = ProviderContainer(
       overrides: [
         weatherServiceProvider.overrideWithValue(mock),
@@ -33,8 +47,6 @@ void main() {
 
     container.read(weatherNotifierProvider.notifier).fetch(param);
     final value2 = container.read(weatherNotifierProvider);
-    verify(mock.fetch(any)).called(1);
-    expect(value2, isA<WeatherResponseModel>());
     expect(value2, response);
   });
 }
