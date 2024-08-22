@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -19,12 +20,16 @@ void main() {
   test('serviceのfetchが呼び出されたとき, APIのfetchが1度だけ呼び出される', () async {
     const path = 'test/assets/fetch_weather.json';
     final jsonString = await File(path).readAsString();
+    final model = WeatherResponseModel.fromJson(
+      jsonDecode(jsonString) as Map<String, dynamic>,
+    );
 
     when(mock.fetchWeather(any)).thenReturn(jsonString);
     final value = service.fetch(param);
 
     verify(mock.fetchWeather(any)).called(1);
     expect(value, isA<WeatherResponseModel>());
+    expect(value, model);
   });
 
   test('APIにInvalidParameterエラーが発生したとき', () {

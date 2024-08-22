@@ -32,6 +32,7 @@ void main() {
 
     verify(mock.fetch(any)).called(1);
     expect(value, isA<WeatherResponseModel>());
+    expect(value, response);
   });
 
   test('weatherNotifierProviderのデフォルト値がnullか', () {
