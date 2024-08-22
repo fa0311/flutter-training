@@ -26,27 +26,27 @@ void main() {
       ],
     );
     addTearDown(container.dispose);
-    when(mock.fetch(any)).thenReturn(response);
+    when(mock.fetch(any)).thenAnswer((_) async => response);
 
-    container.read(weatherNotifierProvider.notifier).fetch(param);
+    await container.read(weatherNotifierProvider.notifier).fetch(param);
 
     verify(mock.fetch(any)).called(1);
   });
 
-  test('controllerのfetchが呼び出されたとき, Notifierの値が更新される', () {
+  test('controllerのfetchが呼び出されたとき, Notifierの値が更新される', () async {
     final container = ProviderContainer(
       overrides: [
         weatherServiceProvider.overrideWithValue(mock),
       ],
     );
     addTearDown(container.dispose);
-    when(mock.fetch(any)).thenReturn(response);
+    when(mock.fetch(any)).thenAnswer((_) async => response);
 
     final value1 = container.read(weatherNotifierProvider);
-    expect(value1, null);
+    expect(value1.value, null);
 
-    container.read(weatherNotifierProvider.notifier).fetch(param);
+    await container.read(weatherNotifierProvider.notifier).fetch(param);
     final value2 = container.read(weatherNotifierProvider);
-    expect(value2, response);
+    expect(value2.value, response);
   });
 }

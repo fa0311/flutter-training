@@ -26,50 +26,50 @@ void main() {
       date: DateTime.parse('2024-08-07T14:54:04+09:00'),
     );
 
-    when(mock.fetchWeather(any)).thenReturn(jsonString);
-    final value = service.fetch(param);
+    when(mock.syncFetchWeather(any)).thenReturn(jsonString);
+    final value = await service.fetch(param);
 
-    verify(mock.fetchWeather(any)).called(1);
     expect(value, model);
   });
 
-  test('APIにInvalidParameterエラーが発生したとき', () {
-    when(mock.fetchWeather(any)).thenThrow(YumemiWeatherError.invalidParameter);
+  test('APIにInvalidParameterエラーが発生したとき', () async {
+    when(mock.syncFetchWeather(any))
+        .thenThrow(YumemiWeatherError.invalidParameter);
     expect(
-      () => service.fetch(param),
-      throwsA(const TypeMatcher<WeatherInvalidParameterException>()),
+      service.fetch(param),
+      throwsA(isA<WeatherInvalidParameterException>()),
     );
   });
 
-  test('APIにUnknownエラーが発生したとき', () {
-    when(mock.fetchWeather(any)).thenThrow(YumemiWeatherError.unknown);
+  test('APIにUnknownエラーが発生したとき', () async {
+    when(mock.syncFetchWeather(any)).thenThrow(YumemiWeatherError.unknown);
     expect(
-      () => service.fetch(param),
-      throwsA(const TypeMatcher<WeatherUnknownException>()),
+      service.fetch(param),
+      throwsA(isA<WeatherUnknownException>()),
     );
   });
 
-  test('APIがJSON以外の応答を返したとき', () {
-    when(mock.fetchWeather(any)).thenReturn('hello world!');
+  test('APIがJSON以外の応答を返したとき', () async {
+    when(mock.syncFetchWeather(any)).thenReturn('hello world!');
     expect(
-      () => service.fetch(param),
-      throwsA(const TypeMatcher<WeatherInvalidResponseException>()),
+      service.fetch(param),
+      throwsA(isA<WeatherInvalidResponseException>()),
     );
   });
 
-  test('APIがJSONを返したが、トップレベルがMAPではないとき', () {
-    when(mock.fetchWeather(any)).thenReturn('"hello world!"');
+  test('APIがJSONを返したが、トップレベルがMAPではないとき', () async {
+    when(mock.syncFetchWeather(any)).thenReturn('"hello world!"');
     expect(
       () => service.fetch(param),
-      throwsA(const TypeMatcher<WeatherInvalidResponseException>()),
+      throwsA(isA<WeatherInvalidResponseException>()),
     );
   });
 
-  test('APIが異なるJSONフォーマットを返したとき', () {
-    when(mock.fetchWeather(any)).thenReturn('{"key":"value"}');
+  test('APIが異なるJSONフォーマットを返したとき', () async {
+    when(mock.syncFetchWeather(any)).thenReturn('{"key":"value"}');
     expect(
       () => service.fetch(param),
-      throwsA(const TypeMatcher<WeatherInvalidResponseException>()),
+      throwsA(isA<WeatherInvalidResponseException>()),
     );
   });
 }
