@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -20,15 +19,17 @@ void main() {
   test('serviceのfetchが呼び出されたとき, APIのfetchが呼び出される', () async {
     const path = 'test/assets/fetch_weather.json';
     final jsonString = await File(path).readAsString();
-    final model = WeatherResponseModel.fromJson(
-      jsonDecode(jsonString) as Map<String, dynamic>,
+    final model = WeatherResponseModel(
+      weatherCondition: WeatherType.sunny,
+      maxTemperature: 25,
+      minTemperature: -9,
+      date: DateTime.parse('2024-08-07T14:54:04+09:00'),
     );
 
     when(mock.fetchWeather(any)).thenReturn(jsonString);
     final value = service.fetch(param);
 
     verify(mock.fetchWeather(any)).called(1);
-    expect(value, isA<WeatherResponseModel>());
     expect(value, model);
   });
 
