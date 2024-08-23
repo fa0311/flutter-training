@@ -35,8 +35,8 @@ void main() {
     );
 
     await robot.tapReload();
-    robot.textFinder('10 ℃');
-    robot.textFinder('-10 ℃');
+    robot.expectFindText('10 ℃');
+    robot.expectFindText('-10 ℃');
   });
 
   testWidgets('sunnyが表示されているかどうか', (tester) async {
