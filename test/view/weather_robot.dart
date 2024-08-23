@@ -21,8 +21,8 @@ class WeatherScreenRobot extends Robot<WeatherScreen> {
       find.descendant(of: find.byType(Dialog), matching: find.text(text));
 
   Future<void> show({required List<Override> overrides}) async {
-    tester.view.devicePixelRatio = 1;
-    tester.view.physicalSize = const Size(2400, 1600);
+    await tester.binding.setSurfaceSize(const Size(375, 790));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(
       ProviderScope(
         overrides: overrides,

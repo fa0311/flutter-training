@@ -4,7 +4,8 @@
     {
       "name": "flutter-training",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "runTestsOnDevice": true
     },
     {
       "name": "flutter-training (profile mode)",
