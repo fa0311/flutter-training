@@ -588,7 +588,7 @@ packages:
     source: hosted
     version: "2.3.10"
   robot:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: robot
       sha256: d944dcc1a158df485afcfd405f84828af1e32d2a63dac0d1de07141288ffe5ab
