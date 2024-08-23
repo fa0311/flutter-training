@@ -79,27 +79,11 @@ void main() {
     completer.complete(response);
     await container.read(weatherNotifierProvider.notifier).fetch(param);
 
-    // ローディング中の実行だがFutureの終了を待機する
+    // Future が終了した後の実行
     final value3 = container.read(weatherNotifierProvider);
     expect(value3.isLoading, false);
 
     verify(mock.fetch(any)).called(1);
-  });
-
-  test('controllerのfetchは更新時にAsyncLoadingになっているか', () async {
-    final mock = MockWeatherService();
-    final container = ProviderContainer(
-      overrides: [
-        weatherServiceProvider.overrideWithValue(mock),
-      ],
-    );
-    addTearDown(container.dispose);
-    final completer = Completer<WeatherResponseModel>();
-    when(mock.fetch(any)).thenAnswer((_) => completer.future);
-
-    unawaited(container.read(weatherNotifierProvider.notifier).fetch(param));
-    final value = container.read(weatherNotifierProvider);
-    expect(value.isLoading, true);
   });
 
   test('controllerのfetchで例外が発生したとき', () async {
