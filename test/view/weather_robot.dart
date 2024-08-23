@@ -17,7 +17,7 @@ class WeatherScreenRobot extends Robot<WeatherScreen> {
   Finder textFinder(String text) =>
       find.descendant(of: this, matching: find.text(text));
 
-  Finder textDialogFinder(String text) =>
+  Finder dialogTextFinder(String text) =>
       find.descendant(of: find.byType(Dialog), matching: find.text(text));
 
   Future<void> show({required List<Override> overrides}) async {
@@ -38,16 +38,16 @@ class WeatherScreenRobot extends Robot<WeatherScreen> {
     await tester.pumpAndSettle();
   }
 
-  void expectSunnyIcon() =>
+  void expectSunnyIconDisplayed() =>
       expect(svgFinder(Assets.weather.sunny.svg()), findsOneWidget);
 
-  void expectCloudyIcon() =>
+  void expectCloudyIconDisplayed() =>
       expect(svgFinder(Assets.weather.cloudy.svg()), findsOneWidget);
 
-  void expectRainyIcon() =>
+  void expectRainyIconDisplayed() =>
       expect(svgFinder(Assets.weather.rainy.svg()), findsOneWidget);
 
   void expectFindText(String text) => expect(textFinder(text), findsOneWidget);
-  void expectFindTextDialog(String text) =>
-      expect(textDialogFinder(text), findsOneWidget);
+  void expectFindDialogText(String text) =>
+      expect(dialogTextFinder(text), findsOneWidget);
 }

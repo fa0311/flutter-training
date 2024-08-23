@@ -54,7 +54,7 @@ void main() {
     );
 
     await robot.tapReload();
-    robot.expectSunnyIcon();
+    robot.expectSunnyIconDisplayed();
   });
 
   testWidgets('cloudyが表示されているかどうか', (tester) async {
@@ -72,7 +72,7 @@ void main() {
     );
 
     await robot.tapReload();
-    robot.expectCloudyIcon();
+    robot.expectCloudyIconDisplayed();
   });
 
   testWidgets('rainyが表示されているかどうか', (tester) async {
@@ -90,7 +90,7 @@ void main() {
     );
 
     await robot.tapReload();
-    robot.expectRainyIcon();
+    robot.expectRainyIconDisplayed();
   });
 
   testWidgets('Exception発生時, 特定のメッセージが表示されているかどうか', (tester) async {
@@ -106,6 +106,6 @@ void main() {
     );
 
     await robot.tapReload();
-    robot.expectFindTextDialog('Unknown');
+    robot.expectFindDialogText('Unknown');
   });
 }
