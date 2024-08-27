@@ -23,7 +23,7 @@ final weatherServiceProvider = Provider<WeatherService>.internal(
 );
 
 typedef WeatherServiceRef = ProviderRef<WeatherService>;
-String _$fetchWeatherHash() => r'357281ae2bc05a3764da092e24ccafc26cc0a975';
+String _$fetchWeatherHash() => r'0ceb785362d74ab1e32d5e200cfde991cffb3166';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -51,7 +51,7 @@ class _SystemHash {
 const fetchWeatherProvider = FetchWeatherFamily();
 
 /// See also [fetchWeather].
-class FetchWeatherFamily extends Family<WeatherResponseModel> {
+class FetchWeatherFamily extends Family<AsyncValue<WeatherResponseModel>> {
   /// See also [fetchWeather].
   const FetchWeatherFamily();
 
@@ -89,7 +89,7 @@ class FetchWeatherFamily extends Family<WeatherResponseModel> {
 }
 
 /// See also [fetchWeather].
-class FetchWeatherProvider extends Provider<WeatherResponseModel> {
+class FetchWeatherProvider extends FutureProvider<WeatherResponseModel> {
   /// See also [fetchWeather].
   FetchWeatherProvider(
     WeatherParameterModel param,
@@ -124,7 +124,7 @@ class FetchWeatherProvider extends Provider<WeatherResponseModel> {
 
   @override
   Override overrideWith(
-    WeatherResponseModel Function(FetchWeatherRef provider) create,
+    FutureOr<WeatherResponseModel> Function(FetchWeatherRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -141,7 +141,7 @@ class FetchWeatherProvider extends Provider<WeatherResponseModel> {
   }
 
   @override
-  ProviderElement<WeatherResponseModel> createElement() {
+  FutureProviderElement<WeatherResponseModel> createElement() {
     return _FetchWeatherProviderElement(this);
   }
 
@@ -159,25 +159,25 @@ class FetchWeatherProvider extends Provider<WeatherResponseModel> {
   }
 }
 
-mixin FetchWeatherRef on ProviderRef<WeatherResponseModel> {
+mixin FetchWeatherRef on FutureProviderRef<WeatherResponseModel> {
   /// The parameter `param` of this provider.
   WeatherParameterModel get param;
 }
 
-class _FetchWeatherProviderElement extends ProviderElement<WeatherResponseModel>
-    with FetchWeatherRef {
+class _FetchWeatherProviderElement
+    extends FutureProviderElement<WeatherResponseModel> with FetchWeatherRef {
   _FetchWeatherProviderElement(super.provider);
 
   @override
   WeatherParameterModel get param => (origin as FetchWeatherProvider).param;
 }
 
-String _$weatherNotifierHash() => r'317db339e9d9ef43b1320f5efd7140994186acde';
+String _$weatherNotifierHash() => r'1bed60cb7366d3996ca99579ae6de8d586a7987f';
 
 /// See also [WeatherNotifier].
 @ProviderFor(WeatherNotifier)
-final weatherNotifierProvider = AutoDisposeNotifierProvider<WeatherNotifier,
-    WeatherResponseModel?>.internal(
+final weatherNotifierProvider = AutoDisposeAsyncNotifierProvider<
+    WeatherNotifier, WeatherResponseModel?>.internal(
   WeatherNotifier.new,
   name: r'weatherNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -187,6 +187,6 @@ final weatherNotifierProvider = AutoDisposeNotifierProvider<WeatherNotifier,
   allTransitiveDependencies: null,
 );
 
-typedef _$WeatherNotifier = AutoDisposeNotifier<WeatherResponseModel?>;
+typedef _$WeatherNotifier = AutoDisposeAsyncNotifier<WeatherResponseModel?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

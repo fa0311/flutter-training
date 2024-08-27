@@ -3,6 +3,8 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'dart:async' as _i4;
+
 import 'package:flutter_training/model/weather_model.dart' as _i2;
 import 'package:flutter_training/service/weather_service.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
@@ -36,25 +38,28 @@ class _FakeWeatherResponseModel_0 extends _i1.SmartFake
 /// See the documentation for Mockito's code generation for more information.
 class MockWeatherService extends _i1.Mock implements _i3.WeatherService {
   @override
-  _i2.WeatherResponseModel fetch(_i2.WeatherParameterModel? model) =>
+  _i4.Future<_i2.WeatherResponseModel> fetch(
+          _i2.WeatherParameterModel? model) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetch,
           [model],
         ),
-        returnValue: _FakeWeatherResponseModel_0(
+        returnValue: _i4.Future<_i2.WeatherResponseModel>.value(
+            _FakeWeatherResponseModel_0(
           this,
           Invocation.method(
             #fetch,
             [model],
           ),
-        ),
-        returnValueForMissingStub: _FakeWeatherResponseModel_0(
+        )),
+        returnValueForMissingStub: _i4.Future<_i2.WeatherResponseModel>.value(
+            _FakeWeatherResponseModel_0(
           this,
           Invocation.method(
             #fetch,
             [model],
           ),
-        ),
-      ) as _i2.WeatherResponseModel);
+        )),
+      ) as _i4.Future<_i2.WeatherResponseModel>);
 }

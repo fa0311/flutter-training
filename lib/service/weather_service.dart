@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_training/model/weather_error.dart';
 import 'package:flutter_training/model/weather_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,9 +15,9 @@ class WeatherService {
     return jsonEncode(model.toJson());
   }
 
-  String _request(String jsonString) {
+  Future<String> _request(String jsonString) async {
     try {
-      final response = _client.fetchWeather(jsonString);
+      final response = await compute(_client.syncFetchWeather, jsonString);
       return response;
     } on YumemiWeatherError catch (e) {
       switch (e) {
@@ -42,9 +43,9 @@ class WeatherService {
     }
   }
 
-  WeatherResponseModel fetch(WeatherParameterModel model) {
+  Future<WeatherResponseModel> fetch(WeatherParameterModel model) async {
     final jsonString = _serialize(model);
-    final raw = _request(jsonString);
+    final raw = await _request(jsonString);
     return _deserialize(raw);
   }
 }
