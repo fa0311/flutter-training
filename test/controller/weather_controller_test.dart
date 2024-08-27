@@ -62,24 +62,29 @@ void main() {
       ],
     );
     addTearDown(container.dispose);
+
+    // CompleterでAPIの返却を制御する
     final completer = Completer<WeatherResponseModel>();
     when(mock.fetch(any)).thenAnswer((_) => completer.future);
 
-    // 最初の実行
-    unawaited(container.read(weatherNotifierProvider.notifier).fetch(param));
+    // 初期値がnullであることの確認
+    final value0 = await container.read(weatherNotifierProvider.future);
+    expect(value0, null);
+
+    // fetchの呼び出し中はローディングであることを確認
+    final firstCall =
+        container.read(weatherNotifierProvider.notifier).fetch(param);
     final value1 = container.read(weatherNotifierProvider);
     expect(value1.isLoading, true);
 
-    // ローディング中の実行
+    // ローディング中にもう一度fetchを呼び出す
     unawaited(container.read(weatherNotifierProvider.notifier).fetch(param));
     final value2 = container.read(weatherNotifierProvider);
     expect(value2.isLoading, true);
 
-    // Future を終了させる
+    // APIを返却させた後、ローディング状態が終了している
     completer.complete(response);
-    await container.read(weatherNotifierProvider.notifier).fetch(param);
-
-    // Future が終了した後の実行
+    await firstCall;
     final value3 = container.read(weatherNotifierProvider);
     expect(value3.isLoading, false);
 
