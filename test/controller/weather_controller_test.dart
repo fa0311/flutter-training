@@ -86,7 +86,7 @@ void main() {
     verify(mock.fetch(any)).called(1);
   });
 
-  test('controllerのfetchで例外が発生したとき', () async {
+  test('WeatherService.fetchで例外が発生したとき', () async {
     final mock = MockWeatherService();
     final container = ProviderContainer(
       overrides: [
