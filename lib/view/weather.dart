@@ -23,6 +23,7 @@ class WeatherScreen extends ConsumerWidget {
         case AsyncLoading():
           await showDialog<void>(
             context: context,
+            barrierDismissible: false,
             builder: (context) {
               return const Center(child: CircularProgressIndicator());
             },
