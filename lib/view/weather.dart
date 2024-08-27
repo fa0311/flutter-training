@@ -16,11 +16,30 @@ class WeatherScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final weatherResponse = ref.watch(weatherNotifierProvider);
 
+    Future<void> showErrorDialog(String? message) async {
+      return showDialog<void>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('エラーが発生しました'),
+            content: message != null ? Text(message) : null,
+            actions: [
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     ref.listen(weatherNotifierProvider, (prev, next) async {
-      switch (next) {
-        case AsyncData():
+      await next.map(
+        data: (data) {
           Navigator.of(context).pop();
-        case AsyncLoading():
+        },
+        loading: (loading) async {
           await showDialog<void>(
             context: context,
             barrierDismissible: false,
@@ -28,26 +47,17 @@ class WeatherScreen extends ConsumerWidget {
               return const Center(child: CircularProgressIndicator());
             },
           );
-        case AsyncError(:final WeatherException error):
+        },
+        error: (error) async {
           Navigator.of(context).pop();
-          await showDialog<void>(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('エラーが発生しました'),
-                content: error.message != null ? Text(error.message!) : null,
-                actions: [
-                  TextButton(
-                    child: const Text('OK'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              );
-            },
-          );
-        case _:
-          throw Exception('unreachable');
-      }
+          final value = error.error;
+          if (value is WeatherException) {
+            await showErrorDialog(value.message);
+          } else {
+            await showErrorDialog('天気の取得に失敗しました');
+          }
+        },
+      );
     });
 
     Future<void> reloadWeather() async {
